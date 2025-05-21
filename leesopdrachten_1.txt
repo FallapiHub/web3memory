@@ -1,0 +1,13 @@
+Leesopdracht toetsmoment 1 Fillip Ilic:
+
+1
+A) Ik denk dat ik het irritantst zou vinden als de knoppen of plaatjes verkeerde tekst of geen tekst hebben, omdat je dan de website moeilijk verder kunt gebruiken. 
+Het irritantste als ziend persoon vind ik tekst waar je op kan klikken, maar dat er geen context clues zijn dat dat klikbare tekst is. 
+
+B) Ook vind ik het vervelend wanneer onderdelen niet goed georganiseerd zijn. 
+Daarmee bedoel ik dat je iets zoekt van een bedrijf en dan hun hele pagina moet doorzoeken om dat ene stukje belangrijke info te vinden.
+
+2
+Zelf ben ik gewend aan desktop first design, omdat ik er nooit aan dacht om het eerst op mobiel te maken. Wel vind ik het heel logisch klinken en handig.
+Het is meer responsive omdat je het designt vanuit een perspectief waar je wel repsonsief MOET zijn. Wel moet ik zeggen dat als je een echt kunstwerk op je site wilt maken met javascript
+lijkt het mij beter om dat eerst op het web te maken. Zelfs dan nog is het misschien beter om eerst mobilefirst te maken. 
