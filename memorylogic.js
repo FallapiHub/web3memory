@@ -38,6 +38,14 @@ let allTiles= [
     'p',    'p',
     'q',    'q',
     'r',    'r',
+    's',    's',
+    't',    't',
+    'u',    'u',
+    'v',    'v',
+    'w',    'w',
+    'x',    'x',
+    'y',    'y',
+    'z',    'z',
 ]
 let boardTiles = []
 
@@ -127,21 +135,22 @@ function checkTiles(){
         TileA.innerText = karakter
         TileB.innerText = karakter
     }
+    openTiles.shift();
+    openTiles.shift();
+
 }
 
 function openTile(obj) {
     if(!openTiles.includes(obj) && !correctTiles.includes(obj)){
         openTiles[openTiles.length] = obj
-        if (openTiles.length===3){
+        if (openTiles.length===2){
             obj.style.backgroundColor = openKleur;
 
             const tile = gameTileValues.find(tile => tile[0] === obj);
             obj.innerText = tile[1];
 
 
-            checkTiles()
-            openTiles.shift();
-            openTiles.shift();
+            setTimeout(checkTiles, 1000)
 
         }
         else{
