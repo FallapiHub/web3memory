@@ -1,5 +1,3 @@
-const hi="hello world"
-
 const test = document.getElementById("dawg")
 const gevondenKaarten = document.getElementById("gevondenKaarten")
 const startGame = document.getElementById("startgame")
@@ -9,11 +7,13 @@ let kaartKleur = "#ff7f50"
 let openKleur = "#1ec5e5"
 let gevondenKleur = "#7af153"
 let karakter = "*";
+let grootte = "6";
 
 document.getElementById("kaartkleur").value = kaartKleur
 document.getElementById("openkleur").value =  openKleur
 document.getElementById("gevondenkleur").value = gevondenKleur
 document.getElementById("karakter").value = karakter
+document.getElementById("grootte").value = grootte
 
 
 let countTiles = 0
@@ -39,8 +39,29 @@ let allTiles= [
     'q',    'q',
     'r',    'r',
 ]
+let boardTiles = []
 
 let gameTileValues=[]
+
+function boardTileSlice(size){
+    size=size**2;
+    boardTiles = allTiles.slice(0, size);
+
+}
+
+function boardCreator(size){
+    const board = document.getElementById("board");
+    board.innerHTML = "";
+    size=size**2;
+    for(let i = 0; i < size; i++){
+        const tileDiv = document.createElement("div");
+        tileDiv.classList.add("tile");
+        tileDiv.innerText = "zazaza";
+        tileDiv.style.backgroundColor = kaartKleur;
+        board.appendChild(tileDiv);
+    }
+
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -58,6 +79,8 @@ function reset(){
     openTiles = []
     correctTiles = []
     gameTileValues = []
+    boardTiles = []
+    gevondenKaarten.innerText = "Gevonden kaarten: " + countTiles
     removeTiles()
     tiles()
 }
@@ -72,6 +95,7 @@ startGame.addEventListener("click", function () {
     openKleur =  document.getElementById("openkleur").value
     gevondenKleur =  document.getElementById("gevondenkleur").value
     karakter =  document.getElementById("karakter").value
+    grootte =  document.getElementById("grootte").value
     for  (let i = 0; i < tile.length; i++) {
         tile[i].style.backgroundColor = kaartKleur
     }
@@ -108,7 +132,7 @@ function checkTiles(){
 function openTile(obj) {
     if(!openTiles.includes(obj) && !correctTiles.includes(obj)){
         openTiles[openTiles.length] = obj
-        if (openTiles.length===2){
+        if (openTiles.length===3){
             obj.style.backgroundColor = openKleur;
 
             const tile = gameTileValues.find(tile => tile[0] === obj);
@@ -116,7 +140,8 @@ function openTile(obj) {
 
 
             checkTiles()
-            openTiles = [];
+            openTiles.shift();
+            openTiles.shift();
 
         }
         else{
@@ -134,15 +159,16 @@ function openTile(obj) {
 const tile = document.getElementsByClassName("tile");
 
 function clickHandler(i){
-    gameTileValues.push([this, allTiles[i]]);
+    gameTileValues.push([this, boardTiles[i]]);
     openTile(this);
 }
-
 const handlers = [];
 
 
 function tiles(){
-    shuffleArray(allTiles);
+    boardTileSlice(grootte)
+    boardCreator(grootte)
+    shuffleArray(boardTiles);
     for  (let i = 0; i < tile.length; i++) {
         const handler = clickHandler.bind(tile[i], i);
 
