@@ -14,42 +14,6 @@
 <p>Resterende toontijd: 10 seconden</p>
 <div class="game">
     <div class="board" id="board">
-        <div class="tile" id="tile">1</div>
-        <div class="tile">1</div>
-        <div class="tile">2</div>
-        <div class="tile">2</div>
-        <div class="tile">3</div>
-        <div class="tile">3</div>
-        <div class="tile">4</div>
-        <div class="tile">4</div>
-        <div class="tile">5</div>
-        <div class="tile">5</div>
-        <div class="tile">6</div>
-        <div class="tile">6</div>
-        <div class="tile">7</div>
-        <div class="tile">7</div>
-        <div class="tile">8</div>
-        <div class="tile">8</div>
-        <div class="tile">9</div>
-        <div class="tile">9</div>
-        <div class="tile">10</div>
-        <div class="tile">10</div>
-        <div class="tile">11</div>
-        <div class="tile">11</div>
-        <div class="tile">12</div>
-        <div class="tile">12</div>
-        <div class="tile">13</div>
-        <div class="tile">13</div>
-        <div class="tile">14</div>
-        <div class="tile">14</div>
-        <div class="tile">15</div>
-        <div class="tile">15</div>
-        <div class="tile">16</div>
-        <div class="tile">16</div>
-        <div class="tile">17</div>
-        <div class="tile">17</div>
-        <div class="tile">18</div>
-        <div class="tile">18</div>
     </div>
     <div class="sidebar">
       <h2>Top 5:</h2>
@@ -62,7 +26,11 @@
             <label typeof="karakter">Karakter</label>
             <input type="text" name="karakter" id="karakter"><br>
             <label typeof="grootte">grootte</label>
-            <input type="number" name="grootte" id="grootte" value="6"><br>
+            <select name="grootte" id="grootte">
+                <option value="6">Large</option>
+                <option value="4">Normal</option>
+                <option value="2">Small</option>
+            </select><br>
             <label typeof="kaartkleur">Kaart kleur</label>
             <input type="color" name="kaartkleur" id="kaartkleur"><br>
             <label typeof="openkleur">Open kaarten kleur</label>

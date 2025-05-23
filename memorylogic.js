@@ -58,7 +58,19 @@ function boardTileSlice(size){
 }
 
 function boardCreator(size){
+    size = parseInt(size, 10)
     const board = document.getElementById("board");
+
+    if(size===2){
+        board.style.gridTemplateColumns = "1fr 1fr";
+    }
+    else if(size===4){
+        board.style.gridTemplateColumns = "1fr 1fr 1fr 1fr";
+    }
+    else if(size===6){
+        board.style.gridTemplateColumns = "1fr 1fr 1fr 1fr 1fr 1fr";
+    }
+
     board.innerHTML = "";
     size=size**2;
     for(let i = 0; i < size; i++){
@@ -68,7 +80,6 @@ function boardCreator(size){
         tileDiv.style.backgroundColor = kaartKleur;
         board.appendChild(tileDiv);
     }
-
 }
 
 function shuffleArray(array) {
