@@ -4,30 +4,31 @@ const startGame = document.getElementById("startgame")
 
 let cats = [];
 
-fetch('https://cataas.com/api/cats?limit=8&skip=0')
-    .then(response => response.json())
-    .then(data => {
-        data.forEach((cat) => {
-            cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
-            cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
+function getCatApi(){
+    cats = [];
+
+    fetch('https://cataas.com/api/cats?limit=8&skip=0')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach((cat) => {
+                cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
+                cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
+            })
+            //test.innerHTML = cats;
+            tiles()
         })
-        test.innerHTML = cats;
-        tiles()
-    })
-    .catch(error => console.log(error));
+        .catch(error => console.log(error));
+}
+
 
 
 
 //kleuren
 let kaartKleur = "#ff7f50"
-let openKleur = "#1ec5e5"
-let gevondenKleur = "#7af153"
 let karakter = "*";
 let grootte = "4";
 
 document.getElementById("kaartkleur").value = kaartKleur
-document.getElementById("openkleur").value =  openKleur
-document.getElementById("gevondenkleur").value = gevondenKleur
 document.getElementById("karakter").value = karakter
 document.getElementById("grootte").value = grootte
 
@@ -35,43 +36,11 @@ document.getElementById("grootte").value = grootte
 let countTiles = 0
 let openTiles = []
 let correctTiles = []
-let allTiles= [
-    'a',    'a',
-    'b',    'b',
-    'c',    'c',
-    'd',    'd',
-    'e',    'e',
-    'f',    'f',
-    'g',    'g',
-    'h',    'h',
-    'i',    'i',
-    'j',    'j',
-    'k',    'k',
-    'l',    'l',
-    'm',    'm',
-    'n',    'n',
-    'o',    'o',
-    'p',    'p',
-    'q',    'q',
-    'r',    'r',
-    's',    's',
-    't',    't',
-    'u',    'u',
-    'v',    'v',
-    'w',    'w',
-    'x',    'x',
-    'y',    'y',
-    'z',    'z',
-]
-let boardTiles = []
+
 
 let gameTileValues=[]
 
-function boardTileSlice(size){
-    size=size**2;
-    boardTiles = allTiles.slice(0, size);
 
-}
 
 function boardCreator(size){
     size = parseInt(size, 10)
@@ -92,7 +61,6 @@ function boardCreator(size){
     for(let i = 0; i < size; i++){
         const tileDiv = document.createElement("div");
         tileDiv.classList.add("tile");
-        tileDiv.innerText = "zaza";
         tileDiv.style.backgroundColor = kaartKleur;
         board.appendChild(tileDiv);
     }
@@ -103,9 +71,6 @@ function shuffleArray(array) {
         const random = Math.floor(Math.random() * (i + 1));
         [array[i], array[random]] = [array[random], array[i]];
     }
-
-    //test.innerText = array;
-
     return array;
 }
 
@@ -114,21 +79,13 @@ function reset(){
     openTiles = []
     correctTiles = []
     gameTileValues = []
-    boardTiles = []
     gevondenKaarten.innerText = "Gevonden kaarten: " + countTiles
     removeTiles()
     tiles()
 }
 
-
-
-
-
-
 startGame.addEventListener("click", function () {
     kaartKleur = document.getElementById("kaartkleur").value
-    openKleur =  document.getElementById("openkleur").value
-    gevondenKleur =  document.getElementById("gevondenkleur").value
     karakter =  document.getElementById("karakter").value
     grootte =  document.getElementById("grootte").value
     for  (let i = 0; i < tile.length; i++) {
@@ -143,15 +100,28 @@ startGame.addEventListener("click", function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
 function checkTiles(){
     let TileA = openTiles[0]
     let TileB = openTiles[1]
 
-    if(TileA.innerText == TileB.innerText){
+    const A = gameTileValues.find(tile => tile[0] === TileA);
+    const B = gameTileValues.find(tile => tile[0] === TileB);
+
+
+
+    if(A[1] === B[1]){
         correctTiles.push(TileA)
         correctTiles.push(TileB)
-        // TileA.style.backgroundColor = gevondenKleur
-        // TileB.style.backgroundColor = gevondenKleur
         countTiles = countTiles + 2
         gevondenKaarten.innerText = "Gevonden kaarten: " + countTiles
     }
@@ -159,6 +129,8 @@ function checkTiles(){
 
         TileA.style.backgroundColor = kaartKleur
         TileB.style.backgroundColor = kaartKleur
+        TileA.style.backgroundImage = null;
+        TileB.style.backgroundImage = null;
         TileA.innerText = karakter
         TileB.innerText = karakter
     }
@@ -167,15 +139,15 @@ function checkTiles(){
 
 }
 
-function openTile(obj) {
+function openTile(obj){
+    const tile = document.getElementsByClassName("tile");
     if(!openTiles.includes(obj) && !correctTiles.includes(obj)){
         openTiles[openTiles.length] = obj
         if (openTiles.length===2){
-            obj.style.backgroundColor = openKleur;
-
             const tile = gameTileValues.find(tile => tile[0] === obj);
-            //obj.innerText = tile[1];
-            obj.style.backgroundImage = "url(" + cats[tile[1]] + ")";
+
+            obj.style.backgroundImage = "url(" + tile[1] + ")";
+
 
 
 
@@ -183,11 +155,10 @@ function openTile(obj) {
 
         }
         else{
-            obj.style.backgroundColor = openKleur;
 
             const tile = gameTileValues.find(tile => tile[0] === obj);
-            //obj.innerText = tile[1];
-            obj.style.backgroundImage = "url(" + cats[tile[1]] + ")";
+            obj.style.backgroundImage = "url(" + tile[1] + ")";
+
 
 
         }
@@ -196,10 +167,8 @@ function openTile(obj) {
 
 }
 
-const tile = document.getElementsByClassName("tile");
 
 function clickHandler(i){
-    //gameTileValues.push([this, boardTiles[i]]);
     gameTileValues.push([this, cats[i]]);
     openTile(this);
 }
@@ -207,9 +176,8 @@ const handlers = [];
 
 
 function tiles(){
-    //boardTileSlice(grootte)
-    boardCreator(grootte)
-    //shuffleArray(boardTiles);
+    boardCreator(4)
+    const tile = document.getElementsByClassName("tile");
     shuffleArray(cats); //4x4
     for  (let i = 0; i < tile.length; i++) {
         const handler = clickHandler.bind(tile[i], i);
@@ -220,10 +188,13 @@ function tiles(){
 
         tile[i].innerText = karakter;
         tile[i].style.backgroundColor = kaartKleur
+        //tile[i].style.backgroundImage = "url(" + cats[i] + ")";
+
     }
 }
 
 function removeTiles(){
+    const tile = document.getElementsByClassName("tile");
     for  (let i = 0; i < tile.length; i++) {
         tile[i].removeEventListener("click", handlers[i]);
     }
@@ -231,6 +202,5 @@ function removeTiles(){
 }
 
 
-
-
+getCatApi()
 
