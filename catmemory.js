@@ -1,13 +1,16 @@
 const test = document.getElementById("dawg")
 const gevondenKaarten = document.getElementById("gevondenKaarten")
 const startGame = document.getElementById("startgame")
+let grootte = "4";
+
 
 let cats = [];
 
 function getCatApi(){
     cats = [];
-
-    fetch('https://cataas.com/api/cats?limit=8&skip=0')
+    const random = Math.floor(Math.random() * (50));
+    const limit = (grootte**2)/2;
+    fetch('https://cataas.com/api/cats?limit='+limit+'&skip=' + random)
         .then(response => response.json())
         .then(data => {
             data.forEach((cat) => {
@@ -15,6 +18,7 @@ function getCatApi(){
                 cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
             })
             //test.innerHTML = cats;
+            test.innerHTML = random;
             tiles()
         })
         .catch(error => console.log(error));
@@ -26,7 +30,6 @@ function getCatApi(){
 //kleuren
 let kaartKleur = "#ff7f50"
 let karakter = "*";
-let grootte = "4";
 
 document.getElementById("kaartkleur").value = kaartKleur
 document.getElementById("karakter").value = karakter
@@ -36,8 +39,6 @@ document.getElementById("grootte").value = grootte
 let countTiles = 0
 let openTiles = []
 let correctTiles = []
-
-
 let gameTileValues=[]
 
 
@@ -81,10 +82,11 @@ function reset(){
     gameTileValues = []
     gevondenKaarten.innerText = "Gevonden kaarten: " + countTiles
     removeTiles()
-    tiles()
+    getCatApi()
 }
 
 startGame.addEventListener("click", function () {
+    const tile = document.getElementsByClassName("tile");
     kaartKleur = document.getElementById("kaartkleur").value
     karakter =  document.getElementById("karakter").value
     grootte =  document.getElementById("grootte").value
@@ -145,7 +147,7 @@ function openTile(obj){
         openTiles[openTiles.length] = obj
         if (openTiles.length===2){
             const tile = gameTileValues.find(tile => tile[0] === obj);
-
+            obj.innerText = "";
             obj.style.backgroundImage = "url(" + tile[1] + ")";
 
 
@@ -156,6 +158,7 @@ function openTile(obj){
         }
         else{
 
+            obj.innerText = "";
             const tile = gameTileValues.find(tile => tile[0] === obj);
             obj.style.backgroundImage = "url(" + tile[1] + ")";
 
@@ -176,9 +179,9 @@ const handlers = [];
 
 
 function tiles(){
-    boardCreator(4)
+    boardCreator(grootte)
     const tile = document.getElementsByClassName("tile");
-    shuffleArray(cats); //4x4
+    shuffleArray(cats);
     for  (let i = 0; i < tile.length; i++) {
         const handler = clickHandler.bind(tile[i], i);
 
@@ -188,8 +191,6 @@ function tiles(){
 
         tile[i].innerText = karakter;
         tile[i].style.backgroundColor = kaartKleur
-        //tile[i].style.backgroundImage = "url(" + cats[i] + ")";
-
     }
 }
 

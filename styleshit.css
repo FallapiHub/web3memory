@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     font-family: arial;
+    background-color: #222222;
+    color: white;
 }
 
 div.game{
@@ -50,7 +52,11 @@ div.game{
     background-color: coral;
     box-shadow: 2px 2px 0px black;
     border-radius: 16px;
-    aspect-ratio: 1
+    aspect-ratio: 1;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .found{
