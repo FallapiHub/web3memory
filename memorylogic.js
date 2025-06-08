@@ -2,28 +2,12 @@ const test = document.getElementById("dawg")
 const gevondenKaarten = document.getElementById("gevondenKaarten")
 const startGame = document.getElementById("startgame")
 
-let cats = [];
-
-fetch('https://cataas.com/api/cats?limit=8&skip=0')
-    .then(response => response.json())
-    .then(data => {
-        data.forEach((cat) => {
-            cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
-            cats.push(`https://cataas.com/cat/${cat.id}?type=square`)
-        })
-        test.innerHTML = cats;
-        tiles()
-    })
-    .catch(error => console.log(error));
-
-
-
 //kleuren
 let kaartKleur = "#ff7f50"
 let openKleur = "#1ec5e5"
 let gevondenKleur = "#7af153"
 let karakter = "*";
-let grootte = "4";
+let grootte = "6";
 
 document.getElementById("kaartkleur").value = kaartKleur
 document.getElementById("openkleur").value =  openKleur
@@ -70,7 +54,6 @@ let gameTileValues=[]
 function boardTileSlice(size){
     size=size**2;
     boardTiles = allTiles.slice(0, size);
-
 }
 
 function boardCreator(size){
@@ -92,7 +75,7 @@ function boardCreator(size){
     for(let i = 0; i < size; i++){
         const tileDiv = document.createElement("div");
         tileDiv.classList.add("tile");
-        tileDiv.innerText = "zaza";
+        tileDiv.innerText = "zazaza";
         tileDiv.style.backgroundColor = kaartKleur;
         board.appendChild(tileDiv);
     }
@@ -104,7 +87,7 @@ function shuffleArray(array) {
         [array[i], array[random]] = [array[random], array[i]];
     }
 
-    //test.innerText = array;
+    test.innerText = array;
 
     return array;
 }
@@ -150,8 +133,8 @@ function checkTiles(){
     if(TileA.innerText == TileB.innerText){
         correctTiles.push(TileA)
         correctTiles.push(TileB)
-        // TileA.style.backgroundColor = gevondenKleur
-        // TileB.style.backgroundColor = gevondenKleur
+        TileA.style.backgroundColor = gevondenKleur
+        TileB.style.backgroundColor = gevondenKleur
         countTiles = countTiles + 2
         gevondenKaarten.innerText = "Gevonden kaarten: " + countTiles
     }
@@ -174,9 +157,7 @@ function openTile(obj) {
             obj.style.backgroundColor = openKleur;
 
             const tile = gameTileValues.find(tile => tile[0] === obj);
-            //obj.innerText = tile[1];
-            obj.style.backgroundImage = "url(" + cats[tile[1]] + ")";
-
+            obj.innerText = tile[1];
 
 
             setTimeout(checkTiles, 1000)
@@ -186,9 +167,7 @@ function openTile(obj) {
             obj.style.backgroundColor = openKleur;
 
             const tile = gameTileValues.find(tile => tile[0] === obj);
-            //obj.innerText = tile[1];
-            obj.style.backgroundImage = "url(" + cats[tile[1]] + ")";
-
+            obj.innerText = tile[1];
 
         }
 
@@ -199,18 +178,16 @@ function openTile(obj) {
 const tile = document.getElementsByClassName("tile");
 
 function clickHandler(i){
-    //gameTileValues.push([this, boardTiles[i]]);
-    gameTileValues.push([this, cats[i]]);
+    gameTileValues.push([this, boardTiles[i]]);
     openTile(this);
 }
 const handlers = [];
 
 
 function tiles(){
-    //boardTileSlice(grootte)
+    boardTileSlice(grootte)
     boardCreator(grootte)
-    //shuffleArray(boardTiles);
-    shuffleArray(cats); //4x4
+    shuffleArray(boardTiles);
     for  (let i = 0; i < tile.length; i++) {
         const handler = clickHandler.bind(tile[i], i);
 
@@ -230,7 +207,4 @@ function removeTiles(){
     handlers.length = 0;
 }
 
-
-
-
-
+tiles()
